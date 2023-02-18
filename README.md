@@ -8,7 +8,6 @@ A package that brings data-binding to your Unity project.
   - [Samples](#samples)
 - [Folder Structure](#cactus-folder-structure)
 - [Installation](#gear-installation)
-  - [IL2CPP restriction](#il2cpp-restriction)
 - [Introduction](#ledger-introduction)
   - [ViewModel](#viewmodel)
   - [CanvasView](#canvasviewtbindingcontext)
