@@ -5,7 +5,6 @@ A package that brings data-binding to your Unity project.
 ## :open_book: Table of Contents
 
 - [About](#pencil-about)
-  - [Samples](#samples)
 - [Folder Structure](#cactus-folder-structure)
 - [Installation](#gear-installation)
 - [Introduction](#ledger-introduction)
