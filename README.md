@@ -42,7 +42,7 @@ Key features:
 - Multiple-properties binding
 - Custom UI Elements support
 - Compatible with [UniTask](https://github.com/Cysharp/UniTask)
-- Mono & IL2CPP support[*](#il2cpp-restriction)
+- Mono & IL2CPP support
 
 ## :gear: Installation
 
