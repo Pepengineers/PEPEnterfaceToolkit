@@ -35,5 +35,9 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 
 			return commandWrapper;
 		}
+
+		public abstract void Dispose();
+		public abstract bool CanInitialize { get; }
+		public abstract void Initialize();
 	}
 }

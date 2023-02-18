@@ -5,15 +5,15 @@ using PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 {
-	public class BindingContextObjectProvider<TBindingContext> : IObjectProvider
+	public class BindingContextObjectProvider<TViewModel> : IObjectProvider
 	{
-		private readonly CommandProvider<TBindingContext> commandProvider;
-		private readonly PropertyProvider<TBindingContext> propertyProvider;
+		private readonly CommandProvider<TViewModel> commandProvider;
+		private readonly PropertyProvider<TViewModel> propertyProvider;
 
-		public BindingContextObjectProvider(TBindingContext bindingContext, IValueConverter[] converters)
+		public BindingContextObjectProvider(TViewModel vm, IValueConverter[] converters)
 		{
-			commandProvider = new CommandProvider<TBindingContext>(bindingContext, converters);
-			propertyProvider = new PropertyProvider<TBindingContext>(bindingContext, converters);
+			commandProvider = new CommandProvider<TViewModel>(vm, converters);
+			propertyProvider = new PropertyProvider<TViewModel>(vm, converters);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

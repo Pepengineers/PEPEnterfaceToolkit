@@ -7,12 +7,12 @@ using PEPEngineers.PEPEnterfaceToolkit.Core.Internal.BindingContextObjectWrapper
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 {
-	internal class PropertyProvider<TBindingContext> : ObjectProvider<TBindingContext>
+	internal class PropertyProvider<TViewModel> : ObjectProvider<TViewModel>
 	{
 		private readonly HashSet<IPropertyValueConverter> propertyValueConverters;
 
-		internal PropertyProvider(TBindingContext bindingContext, IEnumerable<IValueConverter> converters)
-			: base(bindingContext)
+		internal PropertyProvider(TViewModel vm, IEnumerable<IValueConverter> converters)
+			: base(vm)
 		{
 			propertyValueConverters = GetValueConverters<IPropertyValueConverter>(converters);
 		}
@@ -40,7 +40,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 
 			if (typeof(TValueType).GetInterface(nameof(IBaseCommand)) != null)
 				throw new InvalidOperationException(
-					$"To get a command use the {nameof(CommandProvider<TBindingContext>.GetCommand)} method instead.");
+					$"To get a command use the {nameof(CommandProvider<TViewModel>.GetCommand)} method instead.");
 
 			if (TryGetInstanceFromCache<TProperty>(propertyName, out var property)) return property;
 
@@ -56,7 +56,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 					BindingContext, propertyInfo
 				};
 
-				genericPropertyType = propertyType.MakeGenericType(typeof(TBindingContext), typeof(TValueType));
+				genericPropertyType = propertyType.MakeGenericType(typeof(TViewModel), typeof(TValueType));
 			}
 			else
 			{
@@ -66,7 +66,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 					GetValueConverter<TValueType>(propertyInfo.PropertyType, converterName.Span)
 				};
 
-				genericPropertyType = propertyWithValueConverterType.MakeGenericType(typeof(TBindingContext),
+				genericPropertyType = propertyWithValueConverterType.MakeGenericType(typeof(TViewModel),
 					typeof(TValueType), propertyInfo.PropertyType);
 			}
 

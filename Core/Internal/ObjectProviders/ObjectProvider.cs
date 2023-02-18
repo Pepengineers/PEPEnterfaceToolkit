@@ -6,18 +6,18 @@ using PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 {
-	internal abstract class ObjectProvider<TBindingContext>
+	internal abstract class ObjectProvider<TViewModel>
 	{
-		private readonly TBindingContext bindingContext;
+		private readonly TViewModel vm;
 		private readonly Dictionary<(string, Type), object> cachedInstances;
 
-		internal ObjectProvider(TBindingContext bindingContext)
+		internal ObjectProvider(TViewModel vm)
 		{
-			this.bindingContext = bindingContext;
+			this.vm = vm;
 			cachedInstances = new Dictionary<(string, Type), object>();
 		}
 
-		protected TBindingContext BindingContext => bindingContext;
+		protected TViewModel BindingContext => vm;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected HashSet<T> GetValueConverters<T>(IEnumerable<IValueConverter> converters) where T : IValueConverter
@@ -34,7 +34,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected void AssurePropertyExist(string propertyName, out PropertyInfo propertyInfo)
 		{
-			propertyInfo = bindingContext.GetType().GetProperty(propertyName);
+			propertyInfo = vm.GetType().GetProperty(propertyName);
 			if (propertyInfo == null) throw new NullReferenceException($"Property '{propertyName}' not found.");
 		}
 

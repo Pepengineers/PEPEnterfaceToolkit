@@ -1,6 +1,10 @@
-﻿namespace PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces
+﻿using System;
+
+namespace PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces
 {
-	public interface IBindableElement
+	public interface IBindableElement : IDisposable
 	{
+		bool CanInitialize { get; }
+		void Initialize();
 	}
 }

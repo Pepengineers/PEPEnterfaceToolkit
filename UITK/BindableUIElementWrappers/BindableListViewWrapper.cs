@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 {
-	public abstract class BindableListViewWrapper<TItem, TData> : IBindableElement, IInitializable, IDisposable
+	public abstract class BindableListViewWrapper<TItem, TData> : IBindableElement, IDisposable
 	{
 		private readonly VisualTreeAsset itemAsset;
 		private readonly IReadOnlyProperty<ObservableCollection<TData>> itemsCollectionProperty;

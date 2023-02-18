@@ -7,12 +7,12 @@ using PEPEngineers.PEPEnterfaceToolkit.Core.Internal.BindingContextObjectWrapper
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 {
-	internal class CommandProvider<TBindingContext> : ObjectProvider<TBindingContext>
+	internal class CommandProvider<TViewModel> : ObjectProvider<TViewModel>
 	{
 		private readonly HashSet<IParameterValueConverter> parameterConverters;
 
-		internal CommandProvider(TBindingContext bindingContext, IEnumerable<IValueConverter> converters)
-			: base(bindingContext)
+		internal CommandProvider(TViewModel vm, IEnumerable<IValueConverter> converters)
+			: base(vm)
 		{
 			parameterConverters = GetValueConverters<IParameterValueConverter>(converters);
 		}

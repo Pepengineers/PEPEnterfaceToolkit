@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 {
 	// TODO: Reset value on leave.
-	public class BindableTextFieldWrapper : BindablePropertyElement, IInitializable, IDisposable
+	public class BindableTextFieldWrapper : BindablePropertyElement
 	{
 		private readonly BindableTextField textField;
 		private readonly IProperty<string> valueProperty;
@@ -19,14 +19,14 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 			valueProperty = GetProperty<string>(textField.BindingValuePath);
 		}
 
-		public void Dispose()
+		public override void Dispose()
 		{
 			textField.UnregisterValueChangedCallback(OnTextFieldValueChanged);
 		}
 
-		public bool CanInitialize => valueProperty != null;
+		public override bool CanInitialize => valueProperty != null;
 
-		public void Initialize()
+		public override void Initialize()
 		{
 			textField.RegisterValueChangedCallback(OnTextFieldValueChanged);
 		}

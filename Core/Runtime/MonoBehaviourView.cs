@@ -7,16 +7,16 @@ using UnityEngine;
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Runtime
 {
 	[DefaultExecutionOrder(1)]
-	public abstract class MonoBehaviourView<TBindingContext> : MonoBehaviour
-		where TBindingContext : IViewModel
+	public abstract class MonoBehaviourView<TViewModel> : MonoBehaviour
+		where TViewModel : IViewModel
 	{
-		private View<TBindingContext> view;
+		private View view;
 
-		public TBindingContext BindingContext => view.BindingContext;
+		public IViewModel ViewModel => view.ViewModel;
 
 		private void Awake()
 		{
-			view = CreateView(GetViewModel(), GetBindableElementsFactory());
+			CreateView(GetViewModel());
 
 			OnInit();
 			BindElements();
@@ -41,13 +41,13 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Runtime
 		protected abstract IBindableElementsFactory GetBindableElementsFactory();
 		protected abstract IEnumerable<IBindableUIElement> GetBindableUIElements();
 
-		protected virtual TBindingContext GetViewModel()
+		protected virtual TViewModel GetViewModel()
 		{
-			if (typeof(TBindingContext).GetConstructor(Type.EmptyTypes) == null)
+			if (typeof(TViewModel).GetConstructor(Type.EmptyTypes) == null)
 				throw new InvalidOperationException(
-					$"Cannot create an instance of the type parameter {typeof(TBindingContext)} because it does not have a parameterless constructor.");
+					$"Cannot create an instance of the type parameter {typeof(TViewModel)} because it does not have a parameterless constructor.");
 
-			return Activator.CreateInstance<TBindingContext>();
+			return Activator.CreateInstance<TViewModel>();
 		}
 
 		protected virtual IValueConverter[] GetValueConverters()
@@ -55,24 +55,23 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Runtime
 			return Array.Empty<IValueConverter>();
 		}
 
-		protected virtual IObjectProvider GetObjectProvider(TBindingContext bindingContext,
+		protected virtual IObjectProvider GetObjectProvider(TViewModel vm,
 			IValueConverter[] converters)
 		{
-			return new BindingContextObjectProvider<TBindingContext>(bindingContext, converters);
+			return new BindingContextObjectProvider<TViewModel>(vm, converters);
 		}
 
-		private View<TBindingContext> CreateView(TBindingContext bindingContext,
-			IBindableElementsFactory bindableElementsFactory)
+		private void CreateView(TViewModel vm)
 		{
-			return new View<TBindingContext>()
-				.Configure(bindingContext, GetObjectProvider(bindingContext, GetValueConverters()),
-					bindableElementsFactory);
+			view = new View(vm,
+				GetObjectProvider(vm, GetValueConverters()),
+				GetBindableElementsFactory());
 		}
 
 		private void BindElements()
 		{
 			foreach (var bindableUIElement in GetBindableUIElements())
-				view.RegisterBindableElement(bindableUIElement, true);
+				view.RegisterBindableElement(bindableUIElement);
 		}
 	}
 }

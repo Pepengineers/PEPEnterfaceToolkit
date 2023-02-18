@@ -58,8 +58,8 @@ The package contains a collection of standard, self-contained, lightweight types
 
 The included types are:
 - [ViewModel](#viewmodel)
-- [CanvasView\<TBindingContext\>](#canvasviewtbindingcontext)
-- [DocumentView\<TBindingContext\>](#documentviewtbindingcontext)
+- [CanvasView\<TViewModel\>](#canvasviewtbindingcontext)
+- [DocumentView\<TViewModel\>](#documentviewtbindingcontext)
 - [Command & Command\<T\>](#command--commandt)
 - [AsyncCommand & AsyncCommand\<T\>](#asynccommand--asynccommandt)
 - [AsyncLazyCommand & AsyncLazyCommand\<T\>](#asynclazycommand--asynclazycommandt)
@@ -121,9 +121,9 @@ public class UserViewModel : ViewModel
 }
 ```
 
-### CanvasView\<TBindingContext\>
+### CanvasView\<TViewModel\>
 
-The `CanvasView<TBindingContext>` is a base class for `uGUI` view's.
+The `CanvasView<TViewModel>` is a base class for `uGUI` view's.
 
 Key functionality:
 - Provides a base implementation for `Canvas` based view
@@ -156,9 +156,9 @@ public class CounterView : CanvasView<CounterViewModel>
 }
 ```
 
-### DocumentView\<TBindingContext\>
+### DocumentView\<TViewModel\>
 
-The `DocumentView<TBindingContext>` is a base class for `UI Toolkit` view's.
+The `DocumentView<TViewModel>` is a base class for `UI Toolkit` view's.
 
 Key functionality:
 - Provides a base implementation for `UI Document` based view
@@ -517,7 +517,7 @@ public class MyFirstViewModel : ViewModel
 
 #### UI Toolkit
 
-The next step is to create a class `MyFirstDocumentView` that inherits the `DocumentView<TBindingContext>` class.
+The next step is to create a class `MyFirstDocumentView` that inherits the `DocumentView<TViewModel>` class.
 
 ```csharp
 using Pepengineers.PEPEnterfaceToolkit.UITK;
@@ -546,7 +546,7 @@ Finally, add `UI Document` to the scene, set the `MyFirstView.uxml` as a `Source
 
 #### Unity UI (uGUI)
 
-For the `uGUI` do the following. Create a class `MyFirstCanvasView` that inherits the `CanvasView<TBindingContext>` class.
+For the `uGUI` do the following. Create a class `MyFirstCanvasView` that inherits the `CanvasView<TViewModel>` class.
 
 ```csharp
 using Pepengineers.PEPEnterfaceToolkit.UGUI;

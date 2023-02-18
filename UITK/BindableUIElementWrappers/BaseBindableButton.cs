@@ -5,7 +5,7 @@ using PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElements;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 {
-	public abstract class BaseBindableButton : BindableCommandElement, IInitializable, IDisposable
+	public abstract class BaseBindableButton : BindableCommandElement, IDisposable
 	{
 		private readonly BindableButton button;
 		private readonly int buttonId;
@@ -18,15 +18,15 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 			commandWrapper = GetCommandWrapper(buttonId, button.Command);
 		}
 
-		public void Dispose()
+		public override void Dispose()
 		{
 			button.clicked -= OnButtonClicked;
 			commandWrapper.CanExecuteChanged -= OnCommandCanExecuteChanged;
 		}
 
-		public bool CanInitialize => commandWrapper != null;
+		public override bool CanInitialize => commandWrapper != null;
 
-		public void Initialize()
+		public override void Initialize()
 		{
 			button.clicked += OnButtonClicked;
 			button.Enabled = commandWrapper.CanExecute();

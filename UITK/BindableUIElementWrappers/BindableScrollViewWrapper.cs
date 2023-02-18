@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 {
-	public abstract class BindableScrollViewWrapper<TItem, TData> : IBindableElement, IInitializable, IDisposable
+	public abstract class BindableScrollViewWrapper<TItem, TData> : IBindableElement
 		where TData : ICollectionItemData
 	{
 		private readonly VisualTreeAsset itemAsset;

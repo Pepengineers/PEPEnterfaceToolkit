@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK.Runtime
 {
 	[RequireComponent(typeof(UIDocument))]
-	public abstract class DocumentView<TBindingContext> : MonoBehaviourView<TBindingContext>
-		where TBindingContext : IViewModel
+	public abstract class DocumentView<TViewModel> : MonoBehaviourView<TViewModel>
+		where TViewModel : IViewModel
 	{
 		private UIDocument uiDocument;
 

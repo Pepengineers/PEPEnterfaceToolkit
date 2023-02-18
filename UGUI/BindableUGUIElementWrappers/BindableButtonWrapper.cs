@@ -5,34 +5,34 @@ using PEPEngineers.PEPEnterfaceToolkit.UGUI.BindableUGUIElements;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UGUI.BindableUGUIElementWrappers
 {
-	public class BindableButtonWrapper : BindableCommandElement, IInitializable, IDisposable
+	public class BindableButtonWrapper : BindableCommandElement, IDisposable
 	{
-		private readonly BindableButton _button;
-		private readonly int _buttonId;
-		private readonly ICommandWrapper _commandWrapper;
+		private readonly BindableButton button;
+		private readonly int buttonId;
+		private readonly ICommandWrapper commandWrapper;
 
 		public BindableButtonWrapper(BindableButton button, IObjectProvider objectProvider) : base(objectProvider)
 		{
-			_button = button;
-			_buttonId = button.GetInstanceID();
-			_commandWrapper = GetCommandWrapper(_buttonId, button.Command);
+			this.button = button;
+			buttonId = button.GetInstanceID();
+			commandWrapper = GetCommandWrapper(buttonId, button.Command);
 		}
 
-		public void Dispose()
+		public override void Dispose()
 		{
-			_button.Click -= OnButtonClicked;
+			button.Click -= OnButtonClicked;
 		}
 
-		public bool CanInitialize => _commandWrapper != null;
+		public override bool CanInitialize => commandWrapper != null;
 
-		public void Initialize()
+		public override void Initialize()
 		{
-			_button.Click += OnButtonClicked;
+			button.Click += OnButtonClicked;
 		}
 
 		private void OnButtonClicked()
 		{
-			_commandWrapper.Execute(_buttonId);
+			commandWrapper.Execute(buttonId);
 		}
 	}
 }

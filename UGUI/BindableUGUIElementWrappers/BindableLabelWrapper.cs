@@ -7,18 +7,29 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UGUI.BindableUGUIElementWrappers
 {
 	public class BindableLabelWrapper : BindablePropertyElement
 	{
-		private readonly TMP_Text _label;
-		private readonly IReadOnlyProperty<string> _textProperty;
+		private readonly TMP_Text label;
+		private readonly IReadOnlyProperty<string> textProperty;
 
 		public BindableLabelWrapper(BindableLabel label, IObjectProvider objectProvider) : base(objectProvider)
 		{
-			_label = label.Label;
-			_textProperty = GetReadOnlyProperty<string>(label.BindingTextPath);
+			this.label = label.Label;
+			textProperty = GetReadOnlyProperty<string>(label.BindingTextPath);
 		}
 
 		public override void UpdateValues()
 		{
-			_label.text = _textProperty.Value;
+			label.text = textProperty.Value;
+		}
+
+		public override void Dispose()
+		{
+			
+		}
+
+		public override bool CanInitialize => label != null;
+		public override void Initialize()
+		{
+			
 		}
 	}
 }

@@ -19,5 +19,16 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 		{
 			label.text = textProperty.Value;
 		}
+
+		public override void Dispose()
+		{
+			
+		}
+
+		public override bool CanInitialize => label != null;
+		public override void Initialize()
+		{
+			
+		}
 	}
 }

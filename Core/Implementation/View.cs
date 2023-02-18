@@ -5,76 +5,66 @@ using PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 {
-	public class View<TBindingContext> : IDisposable where TBindingContext : IViewModel
+	public class View : IDisposable
 	{
-		private IBindableElementsFactory bindableElementsFactory;
-		private Dictionary<string, HashSet<IBindablePropertyElement>> bindablePropertyElements;
-		private TBindingContext bindingContext;
+		private readonly IBindableElementsFactory bindableElementsFactory;
+		private readonly Dictionary<string, HashSet<IBindablePropertyElement>> bindablePropertyElements;
 
-		private List<IDisposable> disposables;
-		private IObjectProvider objectProvider;
-
-		public TBindingContext BindingContext => bindingContext;
+		private readonly List<IDisposable> disposables;
+		private readonly IObjectProvider objectProvider;
+		
+		public IViewModel ViewModel { get; }
 
 		public void Dispose()
 		{
 			foreach (var disposable in disposables) disposable.Dispose();
 		}
 
-		public View<TBindingContext> Configure(TBindingContext context, IObjectProvider provider,
+		public View(IViewModel context, IObjectProvider provider,
 			IBindableElementsFactory elementsFactory)
 		{
-			bindingContext = context;
-			objectProvider = provider;
-			bindableElementsFactory = elementsFactory;
-
 			disposables = new List<IDisposable>();
 			bindablePropertyElements = new Dictionary<string, HashSet<IBindablePropertyElement>>();
-
-			return this;
+			ViewModel = context;
+			objectProvider = provider;
+			bindableElementsFactory = elementsFactory;
 		}
 
 		public void EnableBinding()
 		{
-			bindingContext.PropertyChanged += OnBindingContextPropertyChanged;
+			ViewModel.PropertyChanged += OnBindingContextPropertyChanged;
 		}
 
 		public void DisableBinding()
 		{
-			bindingContext.PropertyChanged -= OnBindingContextPropertyChanged;
+			ViewModel.PropertyChanged -= OnBindingContextPropertyChanged;
 		}
 
-		public IBindableElement RegisterBindableElement(IBindableUIElement bindableUiElement, bool updateElementValues)
+		public void RegisterBindableElement(IBindableUIElement bindableUiElement)
 		{
 			var bindableElement = bindableElementsFactory.Create(bindableUiElement, objectProvider);
 
-			TryInitialize(bindableElement);
-			TryRegisterPropertyElement(bindableElement, updateElementValues);
-
-			return bindableElement;
+			Initialize(bindableElement);
+			RegisterPropertyElement(bindableElement);
 		}
 
-		private void TryInitialize(IBindableElement bindableElement)
+		private void Initialize(IBindableElement bindableElement)
 		{
-			var canInitialize = false;
-
-			if (bindableElement is IInitializable { CanInitialize: true } initializable)
+			if (bindableElement.CanInitialize)
 			{
-				canInitialize = true;
-				initializable.Initialize();
+				bindableElement.Initialize();
 			}
-
-			if (canInitialize && bindableElement is IDisposable disposable) disposables.Add(disposable);
+			disposables.Add(bindableElement);
 		}
 
-		private void TryRegisterPropertyElement(IBindableElement bindableElement, bool updateElementValues)
+		private void RegisterPropertyElement(IBindableElement bindableElement)
 		{
 			if (bindableElement is not IBindablePropertyElement bindablePropertyElement) return;
 
 			foreach (var propertyName in bindablePropertyElement.BindableProperties)
 				RegisterBindableElement(propertyName, bindablePropertyElement);
 
-			if (updateElementValues && bindablePropertyElement.BindableProperties.Count > 0)
+			if (bindablePropertyElement.BindableProperties.Count > 0)
 				bindablePropertyElement.UpdateValues();
 		}
 

@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UGUI.Runtime
 {
-	public abstract class CanvasView<TBindingContext> : MonoBehaviourView<TBindingContext>
-		where TBindingContext : IViewModel
+	public abstract class CanvasView<TViewModel> : MonoBehaviourView<TViewModel>
+		where TViewModel : IViewModel
 	{
 		public GameObject RootElement { get; private set; }
 
