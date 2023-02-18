@@ -6,21 +6,21 @@ using PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.BindingContextObjectWrappers.PropertyWrappers
 {
-    internal class ReadOnlyPropertyWrapper<TObjectType, TValueType> : IReadOnlyProperty<TValueType>
-    {
-        private readonly TObjectType obj;
-        private readonly Func<TObjectType, TValueType> getPropertyDelegate;
+	internal class ReadOnlyPropertyWrapper<TObjectType, TValueType> : IReadOnlyProperty<TValueType>
+	{
+		private readonly Func<TObjectType, TValueType> getPropertyDelegate;
+		private readonly TObjectType obj;
 
-        public ReadOnlyPropertyWrapper(TObjectType obj, PropertyInfo propertyInfo)
-        {
-            this.obj = obj;
-            getPropertyDelegate = propertyInfo.CreateGetValueDelegate<TObjectType, TValueType>();
-        }
+		public ReadOnlyPropertyWrapper(TObjectType obj, PropertyInfo propertyInfo)
+		{
+			this.obj = obj;
+			getPropertyDelegate = propertyInfo.CreateGetValueDelegate<TObjectType, TValueType>();
+		}
 
-        public TValueType Value
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => getPropertyDelegate(obj);
-        }
-    }
+		public TValueType Value
+		{
+			[MethodImpl(MethodImplOptions.AggressiveInlining)]
+			get => getPropertyDelegate(obj);
+		}
+	}
 }

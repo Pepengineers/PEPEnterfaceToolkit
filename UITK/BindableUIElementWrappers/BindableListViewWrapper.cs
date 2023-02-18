@@ -2,78 +2,74 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
-using UnityEngine.UIElements;
 using PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces;
 using PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElements;
+using UnityEngine.UIElements;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 {
-    public abstract class BindableListViewWrapper<TItem, TData> : IBindableElement, IInitializable, IDisposable
-    {
-        private readonly BindableListView _listView;
-        private readonly VisualTreeAsset _itemAsset;
-        private readonly IReadOnlyProperty<ObservableCollection<TData>> _itemsCollectionProperty;
+	public abstract class BindableListViewWrapper<TItem, TData> : IBindableElement, IInitializable, IDisposable
+	{
+		private readonly VisualTreeAsset itemAsset;
+		private readonly IReadOnlyProperty<ObservableCollection<TData>> itemsCollectionProperty;
 
-        private ObservableCollection<TData> _itemsCollection;
+		protected BindableListViewWrapper(BindableListView listView, VisualTreeAsset itemAsset,
+			IObjectProvider objectProvider)
+		{
+			this.ListView = listView;
+			this.itemAsset = itemAsset;
+			itemsCollectionProperty =
+				objectProvider.GetReadOnlyProperty<ObservableCollection<TData>>(listView.BindingItemsSourcePath,
+					ReadOnlyMemory<char>.Empty);
+		}
 
-        protected BindableListViewWrapper(BindableListView listView, VisualTreeAsset itemAsset,
-            IObjectProvider objectProvider)
-        {
-            _listView = listView;
-            _itemAsset = itemAsset;
-            _itemsCollectionProperty =
-                objectProvider.GetReadOnlyProperty<ObservableCollection<TData>>(listView.BindingItemsSourcePath,
-                    ReadOnlyMemory<char>.Empty);
-        }
+		protected BindableListView ListView { get; }
 
-        public bool CanInitialize => _itemsCollectionProperty != null;
+		protected ObservableCollection<TData> ItemsCollection { get; private set; }
 
-        protected BindableListView ListView => _listView;
-        protected ObservableCollection<TData> ItemsCollection => _itemsCollection;
+		public virtual void Dispose()
+		{
+			ItemsCollection.CollectionChanged -= OnItemsCollectionChanged;
 
-        public virtual void Initialize()
-        {
-            _itemsCollection = _itemsCollectionProperty.Value;
-            _itemsCollection.CollectionChanged += OnItemsCollectionChanged;
+			ListView.makeItem -= MakeItem;
+			ListView.bindItem -= BindItem;
+		}
 
-            _listView.itemsSource = _itemsCollection;
-            _listView.makeItem += MakeItem;
-            _listView.bindItem += BindItem;
-        }
+		public bool CanInitialize => itemsCollectionProperty != null;
 
-        public virtual void Dispose()
-        {
-            _itemsCollection.CollectionChanged -= OnItemsCollectionChanged;
+		public virtual void Initialize()
+		{
+			ItemsCollection = itemsCollectionProperty.Value;
+			ItemsCollection.CollectionChanged += OnItemsCollectionChanged;
 
-            _listView.makeItem -= MakeItem;
-            _listView.bindItem -= BindItem;
-        }
+			ListView.itemsSource = ItemsCollection;
+			ListView.makeItem += MakeItem;
+			ListView.bindItem += BindItem;
+		}
 
-        protected virtual VisualElement MakeItem()
-        {
-            var itemAsset = _itemAsset.Instantiate();
-            itemAsset.userData = OnMakeItem(itemAsset);
+		protected virtual VisualElement MakeItem()
+		{
+			var itemAsset = this.itemAsset.Instantiate();
+			itemAsset.userData = OnMakeItem(itemAsset);
 
-            return itemAsset;
-        }
+			return itemAsset;
+		}
 
-        protected virtual void BindItem(VisualElement itemAsset, int index)
-        {
-            if (index >= 0 && index < _itemsCollection.Count)
-            {
-                OnBindItem((TItem) itemAsset.userData, _itemsCollection[index]);
-            }
-        }
+		protected virtual void BindItem(VisualElement itemAsset, int index)
+		{
+			if (index >= 0 && index < ItemsCollection.Count)
+				OnBindItem((TItem)itemAsset.userData, ItemsCollection[index]);
+		}
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected abstract TItem OnMakeItem(VisualElement itemAsset);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected abstract TItem OnMakeItem(VisualElement itemAsset);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected abstract void OnBindItem(TItem item, TData data);
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected abstract void OnBindItem(TItem item, TData data);
 
-        protected virtual void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            _listView.RefreshItems();
-        }
-    }
+		protected virtual void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			ListView.RefreshItems();
+		}
+	}
 }

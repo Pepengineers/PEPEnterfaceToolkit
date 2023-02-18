@@ -5,114 +5,93 @@ using PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 {
-    public class View<TBindingContext> : IDisposable where TBindingContext : class, INotifyPropertyChanged
-    {
-        private TBindingContext bindingContext;
-        private IObjectProvider objectProvider;
-        private IBindableElementsFactory bindableElementsFactory;
+	public class View<TBindingContext> : IDisposable where TBindingContext : IViewModel
+	{
+		private IBindableElementsFactory bindableElementsFactory;
+		private Dictionary<string, HashSet<IBindablePropertyElement>> bindablePropertyElements;
+		private TBindingContext bindingContext;
 
-        private List<IDisposable> disposables;
-        private Dictionary<string, HashSet<IBindablePropertyElement>> bindablePropertyElements;
+		private List<IDisposable> disposables;
+		private IObjectProvider objectProvider;
 
-        public TBindingContext BindingContext => bindingContext;
+		public TBindingContext BindingContext => bindingContext;
 
-        public View<TBindingContext> Configure(TBindingContext bindingContext, IObjectProvider objectProvider,
-            IBindableElementsFactory elementsFactory)
-        {
-            this.bindingContext = bindingContext;
-            this.objectProvider = objectProvider;
-            bindableElementsFactory = elementsFactory;
+		public void Dispose()
+		{
+			foreach (var disposable in disposables) disposable.Dispose();
+		}
 
-            disposables = new List<IDisposable>();
-            bindablePropertyElements = new Dictionary<string, HashSet<IBindablePropertyElement>>();
+		public View<TBindingContext> Configure(TBindingContext context, IObjectProvider provider,
+			IBindableElementsFactory elementsFactory)
+		{
+			bindingContext = context;
+			objectProvider = provider;
+			bindableElementsFactory = elementsFactory;
 
-            return this;
-        }
+			disposables = new List<IDisposable>();
+			bindablePropertyElements = new Dictionary<string, HashSet<IBindablePropertyElement>>();
 
-        public void EnableBinding()
-        {
-            bindingContext.PropertyChanged += OnBindingContextPropertyChanged;
-        }
+			return this;
+		}
 
-        public void DisableBinding()
-        {
-            bindingContext.PropertyChanged -= OnBindingContextPropertyChanged;
-        }
+		public void EnableBinding()
+		{
+			bindingContext.PropertyChanged += OnBindingContextPropertyChanged;
+		}
 
-        public IBindableElement RegisterBindableElement(IBindableUIElement bindableUiElement, bool updateElementValues)
-        {
-            var bindableElement = bindableElementsFactory.Create(bindableUiElement, objectProvider);
+		public void DisableBinding()
+		{
+			bindingContext.PropertyChanged -= OnBindingContextPropertyChanged;
+		}
 
-            TryInitialize(bindableElement);
-            TryRegisterPropertyElement(bindableElement, updateElementValues);
+		public IBindableElement RegisterBindableElement(IBindableUIElement bindableUiElement, bool updateElementValues)
+		{
+			var bindableElement = bindableElementsFactory.Create(bindableUiElement, objectProvider);
 
-            return bindableElement;
-        }
+			TryInitialize(bindableElement);
+			TryRegisterPropertyElement(bindableElement, updateElementValues);
 
-        public void Dispose()
-        {
-            foreach (var disposable in disposables)
-            {
-                disposable.Dispose();
-            }
-        }
+			return bindableElement;
+		}
 
-        private void TryInitialize(IBindableElement bindableElement)
-        {
-            var canInitialize = false;
+		private void TryInitialize(IBindableElement bindableElement)
+		{
+			var canInitialize = false;
 
-            if (bindableElement is IInitializable { CanInitialize: true } initializable)
-            {
-                canInitialize = true;
-                initializable.Initialize();
-            }
+			if (bindableElement is IInitializable { CanInitialize: true } initializable)
+			{
+				canInitialize = true;
+				initializable.Initialize();
+			}
 
-            if (canInitialize && bindableElement is IDisposable disposable)
-            {
-                disposables.Add(disposable);
-            }
-        }
+			if (canInitialize && bindableElement is IDisposable disposable) disposables.Add(disposable);
+		}
 
-        private void TryRegisterPropertyElement(IBindableElement bindableElement, bool updateElementValues)
-        {
-            if (bindableElement is not IBindablePropertyElement bindablePropertyElement)
-            {
-                return;
-            }
+		private void TryRegisterPropertyElement(IBindableElement bindableElement, bool updateElementValues)
+		{
+			if (bindableElement is not IBindablePropertyElement bindablePropertyElement) return;
 
-            foreach (var propertyName in bindablePropertyElement.BindableProperties)
-            {
-                RegisterBindableElement(propertyName, bindablePropertyElement);
-            }
+			foreach (var propertyName in bindablePropertyElement.BindableProperties)
+				RegisterBindableElement(propertyName, bindablePropertyElement);
 
-            if (updateElementValues && bindablePropertyElement.BindableProperties.Count > 0)
-            {
-                bindablePropertyElement.UpdateValues();
-            }
-        }
+			if (updateElementValues && bindablePropertyElement.BindableProperties.Count > 0)
+				bindablePropertyElement.UpdateValues();
+		}
 
-        private void RegisterBindableElement(string propertyName, IBindablePropertyElement bindablePropertyElement)
-        {
-            if (bindablePropertyElements.TryGetValue(propertyName, out var propertyElements))
-            {
-                propertyElements.Add(bindablePropertyElement);
-            }
-            else
-            {
-                bindablePropertyElements.Add(propertyName,
-                    new HashSet<IBindablePropertyElement> { bindablePropertyElement });
-            }
-        }
+		private void RegisterBindableElement(string propertyName, IBindablePropertyElement bindablePropertyElement)
+		{
+			if (bindablePropertyElements.TryGetValue(propertyName, out var propertyElements))
+				propertyElements.Add(bindablePropertyElement);
+			else
+				bindablePropertyElements.Add(propertyName,
+					new HashSet<IBindablePropertyElement> { bindablePropertyElement });
+		}
 
-        private void OnBindingContextPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (bindablePropertyElements.TryGetValue(e.PropertyName, out var propertyElements))
-            {
-                foreach (var propertyElement in propertyElements)
-                {
-                    propertyElement.UpdateValues();
-                }
-            }
-        }
-    }
+		private void OnBindingContextPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (bindablePropertyElements.TryGetValue(e.PropertyName, out var propertyElements))
+				foreach (var propertyElement in propertyElements)
+					propertyElement.UpdateValues();
+		}
+	}
 }

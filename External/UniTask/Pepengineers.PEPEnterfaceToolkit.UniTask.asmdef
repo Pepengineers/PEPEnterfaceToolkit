@@ -1,23 +1,23 @@
 {
-    "name": "PEPEngineers.PEPEnterfaceToolkit.UniTask",
-    "rootNamespace": "PEPEngineers",
-    "references": [
-        "Pepengineers.PEPEnterfaceToolkit.Core",
-        "UniTask"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [
-        {
-            "name": "com.cysharp.unitask",
-            "expression": "",
-            "define": "UNITASK_SUPPORT"
-        }
-    ],
-    "noEngineReferences": false
+  "name": "PEPEngineers.PEPEnterfaceToolkit.UniTask",
+  "rootNamespace": "PEPEngineers",
+  "references": [
+    "Pepengineers.PEPEnterfaceToolkit.Core",
+    "UniTask"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [
+    {
+      "name": "com.cysharp.unitask",
+      "expression": "",
+      "define": "UNITASK_SUPPORT"
+    }
+  ],
+  "noEngineReferences": false
 }

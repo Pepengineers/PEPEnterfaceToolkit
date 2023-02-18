@@ -1,16 +1,16 @@
 {
-    "name": "PEPEngineers.PEPEnterfaceToolkit.UITK",
-    "rootNamespace": "PEPEngineers",
-    "references": [
-        "PEPEngineers.PEPEnterfaceToolkit.Core"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "PEPEngineers.PEPEnterfaceToolkit.UITK",
+  "rootNamespace": "PEPEngineers",
+  "references": [
+    "PEPEngineers.PEPEnterfaceToolkit.Core"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

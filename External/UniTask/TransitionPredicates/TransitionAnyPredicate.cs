@@ -1,5 +1,4 @@
 ﻿#if UNITASK_SUPPORT
-
 namespace Pepengineers.PEPEnterfaceToolkit.UniTask.TransitionPredicates
 {
     using Interfaces;

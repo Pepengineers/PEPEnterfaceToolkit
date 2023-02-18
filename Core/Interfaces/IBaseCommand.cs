@@ -2,11 +2,11 @@
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces
 {
-    public interface IBaseCommand
-    {
-        event EventHandler<bool> CanExecuteChanged;
+	public interface IBaseCommand
+	{
+		event EventHandler<bool> CanExecuteChanged;
 
-        bool CanExecute();
-        void RaiseCanExecuteChanged();
-    }
+		bool CanExecute();
+		void RaiseCanExecuteChanged();
+	}
 }

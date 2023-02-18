@@ -2,8 +2,8 @@
 
 namespace PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces
 {
-    public interface ICollectionItemData
-    {
-        Guid Id { get; }
-    }
+	public interface ICollectionItemData
+	{
+		Guid Id { get; }
+	}
 }

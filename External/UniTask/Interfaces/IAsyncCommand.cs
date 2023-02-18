@@ -1,5 +1,4 @@
 ﻿#if UNITASK_SUPPORT
-
 namespace Pepengineers.PEPEnterfaceToolkit.UniTask.Interfaces
 {
     using System.Threading;

@@ -1,49 +1,45 @@
 ﻿using System;
-using UnityEngine.UIElements;
-using PEPEngineers.PEPEnterfaceToolkit.Core;
 using PEPEngineers.PEPEnterfaceToolkit.Core.Implementation;
 using PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces;
 using PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElements;
+using UnityEngine.UIElements;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 {
-    // TODO: Reset value on leave.
-    public class BindableTextFieldWrapper : BindablePropertyElement, IInitializable, IDisposable
-    {
-        private readonly BindableTextField _textField;
-        private readonly IProperty<string> _valueProperty;
+	// TODO: Reset value on leave.
+	public class BindableTextFieldWrapper : BindablePropertyElement, IInitializable, IDisposable
+	{
+		private readonly BindableTextField textField;
+		private readonly IProperty<string> valueProperty;
 
-        public BindableTextFieldWrapper(BindableTextField textField, IObjectProvider objectProvider)
-            : base(objectProvider)
-        {
-            _textField = textField;
-            _valueProperty = GetProperty<string>(textField.BindingValuePath);
-        }
+		public BindableTextFieldWrapper(BindableTextField textField, IObjectProvider objectProvider)
+			: base(objectProvider)
+		{
+			this.textField = textField;
+			valueProperty = GetProperty<string>(textField.BindingValuePath);
+		}
 
-        public bool CanInitialize => _valueProperty != null;
+		public void Dispose()
+		{
+			textField.UnregisterValueChangedCallback(OnTextFieldValueChanged);
+		}
 
-        public void Initialize()
-        {
-            _textField.RegisterValueChangedCallback(OnTextFieldValueChanged);
-        }
+		public bool CanInitialize => valueProperty != null;
 
-        public override void UpdateValues()
-        {
-            var value = _valueProperty.Value;
-            if (_textField.value != value)
-            {
-                _textField.SetValueWithoutNotify(value);
-            }
-        }
+		public void Initialize()
+		{
+			textField.RegisterValueChangedCallback(OnTextFieldValueChanged);
+		}
 
-        public void Dispose()
-        {
-            _textField.UnregisterValueChangedCallback(OnTextFieldValueChanged);
-        }
+		public override void UpdateValues()
+		{
+			var value = valueProperty.Value;
+			if (textField.value != value) textField.SetValueWithoutNotify(value);
+		}
 
-        private void OnTextFieldValueChanged(ChangeEvent<string> e)
-        {
-            _valueProperty.Value = e.newValue;
-        }
-    }
+		private void OnTextFieldValueChanged(ChangeEvent<string> e)
+		{
+			valueProperty.Value = e.newValue;
+		}
+	}
 }

@@ -1,12 +1,12 @@
 ﻿namespace PEPEngineers.PEPEnterfaceToolkit.Core.Interfaces
 {
-    public interface ICommand : IBaseCommand
-    {
-        void Execute();
-    }
+	public interface ICommand : IBaseCommand
+	{
+		void Execute();
+	}
 
-    public interface ICommand<in T> : IBaseCommand
-    {
-        void Execute(T parameter);
-    }
+	public interface ICommand<in T> : IBaseCommand
+	{
+		void Execute(T parameter);
+	}
 }
