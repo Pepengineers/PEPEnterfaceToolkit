@@ -1,4 +1,4 @@
-# Pepengineers.PEPEnterfaceToolkit
+# PEPEnterfaceToolkit
 
 A package that brings data-binding to your Unity project.
 
@@ -34,7 +34,7 @@ A package that brings data-binding to your Unity project.
 
 ## :pencil: About
 
-The **Pepengineers.PEPEnterfaceToolkit** allows you to use data binding to establish a connection between the app UI and the data it displays. This is a simple and consistent way to achieve clean separation of business logic from UI. Use the samples as a starting point for understanding how to utilize the package.
+The **PEPEnterfaceToolkit** allows you to use data binding to establish a connection between the app UI and the data it displays. This is a simple and consistent way to achieve clean separation of business logic from UI. Use the samples as a starting point for understanding how to utilize the package.
 
 Key features:
 - Runtime data-binding
@@ -46,7 +46,7 @@ Key features:
 
 ## :gear: Installation
 
-You can install Pepengineers.PEPEnterfaceToolkit in one of the following ways:
+You can install PEPEnterfaceToolkit in one of the following ways:
 
 <summary>Install via Git URL</summary>
 
@@ -493,7 +493,7 @@ public class MyViewModel : ViewModel
 
 ## :watch: Quick start
 
-Once the `Pepengineers.PEPEnterfaceToolkit` is installed, create a class `MyFirstViewModel` that inherits the `ViewModel` class.
+Once the `PEPEnterfaceToolkit` is installed, create a class `MyFirstViewModel` that inherits the `ViewModel` class.
 
 ```csharp
 using Pepengineers.PEPEnterfaceToolkit.Core;
@@ -868,7 +868,7 @@ public class BindableImageWrapper : BindablePropertyElement
 }
 ```
 
-The **Pepengineers.PEPEnterfaceToolkit** contains two abstract classes `BindableCommandElement` and `BindablePropertyElement` that provide a methods for getting properties from the `BindingContext`.
+The **PEPEnterfaceToolkit** contains two abstract classes `BindableCommandElement` and `BindablePropertyElement` that provide a methods for getting properties from the `BindingContext`.
 
 Finally, tell the elements factory what to do with the new UI element.
 
@@ -926,7 +926,7 @@ public class ImageViewerViewModel : ViewModel
 
 To enable [async commands](#asynccommand--asynccommandt) support, you need to add the [UniTask](https://github.com/Cysharp/UniTask) package to your project.
 
-In addition to async commands **Pepengineers.PEPEnterfaceToolkit** provides extensions to make [USS transition](https://docs.unity3d.com/Manual/UIE-Transitions.html)'s awaitable.
+In addition to async commands **PEPEnterfaceToolkit** provides extensions to make [USS transition](https://docs.unity3d.com/Manual/UIE-Transitions.html)'s awaitable.
 
 For example, your `VisualElement` has the following transitions.
 ```css
