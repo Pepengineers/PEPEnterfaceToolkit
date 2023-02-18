@@ -1,0 +1,10 @@
+{
+    "name": "com.pepengineers.pepenterfacetoolkit",
+    "displayName": "PEPEnterface MVVM Toolkit for Unity",
+    "author": { "name": "PEPEngineers", "url": "https://github.com/Pepengineers" },
+    "version": "0.2.0",
+    "unity": "2018.4",
+    "description": "The PEPEnterface allows you to use data binding to establish a connection between the app UI and the data it displays. This is a simple and consistent way to achieve clean separation of business logic from UI.",
+    "keywords": [ "mvvm", "binding", "ui", "toolkit" ],
+    "license": "MIT"
+}
