@@ -41,13 +41,9 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Runtime
 		protected abstract IBindableElementsFactory GetBindableElementsFactory();
 		protected abstract IEnumerable<IBindableUIElement> GetBindableUIElements();
 
-		protected virtual TViewModel GetViewModel()
+		private TViewModel GetViewModel()
 		{
-			if (typeof(TViewModel).GetConstructor(Type.EmptyTypes) == null)
-				throw new InvalidOperationException(
-					$"Cannot create an instance of the type parameter {typeof(TViewModel)} because it does not have a parameterless constructor.");
-
-			return Activator.CreateInstance<TViewModel>();
+			return GetComponent<TViewModel>();
 		}
 
 		protected virtual IValueConverter[] GetValueConverters()
