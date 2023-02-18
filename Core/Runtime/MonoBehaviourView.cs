@@ -16,7 +16,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Runtime
 
 		private void Awake()
 		{
-			view = CreateView(GetBindingContext(), GetBindableElementsFactory());
+			view = CreateView(GetViewModel(), GetBindableElementsFactory());
 
 			OnInit();
 			BindElements();
@@ -41,7 +41,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Runtime
 		protected abstract IBindableElementsFactory GetBindableElementsFactory();
 		protected abstract IEnumerable<IBindableUIElement> GetBindableUIElements();
 
-		protected virtual TBindingContext GetBindingContext()
+		protected virtual TBindingContext GetViewModel()
 		{
 			if (typeof(TBindingContext).GetConstructor(Type.EmptyTypes) == null)
 				throw new InvalidOperationException(
