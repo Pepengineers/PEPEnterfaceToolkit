@@ -8,8 +8,8 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Internal.ObjectProviders
 {
 	internal abstract class ObjectProvider<TViewModel>
 	{
-		private readonly TViewModel vm;
 		private readonly Dictionary<(string, Type), object> cachedInstances;
+		private readonly TViewModel vm;
 
 		internal ObjectProvider(TViewModel vm)
 		{

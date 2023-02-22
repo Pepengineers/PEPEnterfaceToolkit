@@ -18,12 +18,12 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UGUI.BindableUGUIElementWrappers
 			textProperty = GetProperty<string>(inputField.BindingTextPath);
 		}
 
+		public override bool CanInitialize => textProperty != null;
+
 		public override void Dispose()
 		{
 			inputField.onValueChanged.RemoveListener(OnInputFieldTextChanged);
 		}
-
-		public override bool CanInitialize => textProperty != null;
 
 		public override void Initialize()
 		{

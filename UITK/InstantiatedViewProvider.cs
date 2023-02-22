@@ -41,10 +41,10 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK
 		{
 			view = new View(vm, GetObjectProvider(vm, GetValueConverters()),
 				GetBindableElementsFactory());
-			
+
 			foreach (var bindableUIElement in binds)
 				view.RegisterBindableElement(bindableUIElement);
-			
+
 			view.EnableBinding();
 		}
 

@@ -17,6 +17,10 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 			commandStringParser = new CommandStringParser();
 		}
 
+		public abstract void Dispose();
+		public abstract bool CanInitialize { get; }
+		public abstract void Initialize();
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		protected TCommand GetCommand<TCommand>(string propertyName) where TCommand : IBaseCommand
 		{
@@ -35,9 +39,5 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 
 			return commandWrapper;
 		}
-
-		public abstract void Dispose();
-		public abstract bool CanInitialize { get; }
-		public abstract void Initialize();
 	}
 }

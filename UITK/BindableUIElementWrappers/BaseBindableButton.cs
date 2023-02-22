@@ -18,13 +18,13 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 			commandWrapper = GetCommandWrapper(buttonId, button.Command);
 		}
 
+		public override bool CanInitialize => commandWrapper != null;
+
 		public override void Dispose()
 		{
 			button.clicked -= OnButtonClicked;
 			commandWrapper.CanExecuteChanged -= OnCommandCanExecuteChanged;
 		}
-
-		public override bool CanInitialize => commandWrapper != null;
 
 		public override void Initialize()
 		{

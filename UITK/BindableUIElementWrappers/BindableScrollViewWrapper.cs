@@ -21,7 +21,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 		protected BindableScrollViewWrapper(BindableScrollView scrollView, VisualTreeAsset itemAsset,
 			IObjectProvider objectProvider)
 		{
-			this.ScrollView = scrollView;
+			ScrollView = scrollView;
 			this.itemAsset = itemAsset;
 
 			itemsCollectionProperty =

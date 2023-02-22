@@ -15,6 +15,8 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 			textProperty = GetReadOnlyProperty<string>(label.BindingTextPath);
 		}
 
+		public override bool CanInitialize => label != null;
+
 		public override void UpdateValues()
 		{
 			label.text = textProperty.Value;
@@ -22,13 +24,10 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 
 		public override void Dispose()
 		{
-			
 		}
 
-		public override bool CanInitialize => label != null;
 		public override void Initialize()
 		{
-			
 		}
 	}
 }

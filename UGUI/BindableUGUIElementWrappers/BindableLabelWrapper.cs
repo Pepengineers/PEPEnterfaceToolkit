@@ -16,6 +16,8 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UGUI.BindableUGUIElementWrappers
 			textProperty = GetReadOnlyProperty<string>(label.BindingTextPath);
 		}
 
+		public override bool CanInitialize => label != null;
+
 		public override void UpdateValues()
 		{
 			label.text = textProperty.Value;
@@ -23,13 +25,10 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UGUI.BindableUGUIElementWrappers
 
 		public override void Dispose()
 		{
-			
 		}
 
-		public override bool CanInitialize => label != null;
 		public override void Initialize()
 		{
-			
 		}
 	}
 }

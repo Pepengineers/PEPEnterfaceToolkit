@@ -8,13 +8,13 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Runtime
 {
 	public abstract class MonoBehaviourViewModel : MonoBehaviour, IViewModel
 	{
-		private event PropertyChangedEventHandler PropertyChanged;
-
 		event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
 		{
-			add => this.PropertyChanged += value;
-			remove => this.PropertyChanged -= value;
+			add => PropertyChanged += value;
+			remove => PropertyChanged -= value;
 		}
+
+		private event PropertyChangedEventHandler PropertyChanged;
 
 		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{

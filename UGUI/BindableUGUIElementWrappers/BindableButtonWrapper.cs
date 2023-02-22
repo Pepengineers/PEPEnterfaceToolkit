@@ -18,12 +18,12 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UGUI.BindableUGUIElementWrappers
 			commandWrapper = GetCommandWrapper(buttonId, button.Command);
 		}
 
+		public override bool CanInitialize => commandWrapper != null;
+
 		public override void Dispose()
 		{
 			button.Click -= OnButtonClicked;
 		}
-
-		public override bool CanInitialize => commandWrapper != null;
 
 		public override void Initialize()
 		{

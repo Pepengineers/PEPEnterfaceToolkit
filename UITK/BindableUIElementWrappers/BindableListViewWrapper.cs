@@ -16,7 +16,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK.BindableUIElementWrappers
 		protected BindableListViewWrapper(BindableListView listView, VisualTreeAsset itemAsset,
 			IObjectProvider objectProvider)
 		{
-			this.ListView = listView;
+			ListView = listView;
 			this.itemAsset = itemAsset;
 			itemsCollectionProperty =
 				objectProvider.GetReadOnlyProperty<ObservableCollection<TData>>(listView.BindingItemsSourcePath,

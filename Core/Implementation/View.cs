@@ -12,13 +12,6 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 
 		private readonly List<IDisposable> disposables;
 		private readonly IObjectProvider objectProvider;
-		
-		public IViewModel ViewModel { get; }
-
-		public void Dispose()
-		{
-			foreach (var disposable in disposables) disposable.Dispose();
-		}
 
 		public View(IViewModel context, IObjectProvider provider,
 			IBindableElementsFactory elementsFactory)
@@ -28,6 +21,13 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 			ViewModel = context;
 			objectProvider = provider;
 			bindableElementsFactory = elementsFactory;
+		}
+
+		public IViewModel ViewModel { get; }
+
+		public void Dispose()
+		{
+			foreach (var disposable in disposables) disposable.Dispose();
 		}
 
 		public void EnableBinding()
@@ -50,10 +50,7 @@ namespace PEPEngineers.PEPEnterfaceToolkit.Core.Implementation
 
 		private void Initialize(IBindableElement bindableElement)
 		{
-			if (bindableElement.CanInitialize)
-			{
-				bindableElement.Initialize();
-			}
+			if (bindableElement.CanInitialize) bindableElement.Initialize();
 			disposables.Add(bindableElement);
 		}
 
