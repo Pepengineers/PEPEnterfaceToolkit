@@ -5,10 +5,8 @@ A package that brings data-binding to your Unity project.
 ## :open_book: Table of Contents
 
 - [About](#pencil-about)
-  - [Samples](#samples)
 - [Folder Structure](#cactus-folder-structure)
 - [Installation](#gear-installation)
-  - [IL2CPP restriction](#il2cpp-restriction)
 - [Introduction](#ledger-introduction)
   - [ViewModel](#viewmodel)
   - [CanvasView](#canvasviewtbindingcontext)
@@ -78,7 +76,7 @@ Key functionality:
 - Provides a base implementation for `INotifyPropertyChanged`, exposing the `PropertyChanged` event
 - Provides a series of `Set` methods that can be used to easily set property values from types inheriting from `ViewModel`, and to automatically raise the appropriate events
 
-> **Note:** In case your viewmodel doesn't have a parameterless constructor, you need to override the `GetBindingContext` method in the view.
+> **Note:** In case your viewmodel doesn't have a parameterless constructor, you need to override the `GetViewModel` method in the view.
 
 #### Simple property
 
