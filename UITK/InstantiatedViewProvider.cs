@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace PEPEngineers.PEPEnterfaceToolkit.UITK
 {
-	public class InstantiatedViewProvider<TViewModel> where TViewModel : IViewModel
+	public sealed class InstantiatedViewProvider<TViewModel> where TViewModel : IViewModel
 	{
 		private readonly ICollection<IBindableUIElement> binds;
 		private View view;
@@ -21,18 +21,18 @@ namespace PEPEngineers.PEPEnterfaceToolkit.UITK
 				.ToList();
 		}
 
-		protected virtual IValueConverter[] GetValueConverters()
+		private IValueConverter[] GetValueConverters()
 		{
 			return Array.Empty<IValueConverter>();
 		}
 
-		protected virtual IObjectProvider GetObjectProvider(TViewModel vm,
+		private IObjectProvider GetObjectProvider(TViewModel vm,
 			IValueConverter[] converters)
 		{
 			return new BindingContextObjectProvider<TViewModel>(vm, converters);
 		}
 
-		protected virtual IBindableElementsFactory GetBindableElementsFactory()
+		private IBindableElementsFactory GetBindableElementsFactory()
 		{
 			return new BindableElementsFactory();
 		}
